@@ -13,10 +13,10 @@ public class Lancamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "A descrição é obrigatória")
+    @NotBlank(message = "A descricao e obrigatoria")
     private String descricao;
 
-    @NotNull(message = "O valor é obrigatório")
+    @NotNull(message = "O valor e obrigatorio")
     @Positive(message = "O valor deve ser positivo")
     private BigDecimal valor;
 
@@ -25,7 +25,6 @@ public class Lancamento {
     @Enumerated(EnumType.STRING)
     private TipoLancamento tipo;
 
-    // Getters e Setters ...
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getDescricao() { return descricao; }

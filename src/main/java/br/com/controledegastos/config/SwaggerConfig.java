@@ -14,6 +14,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Controle de Gastos API")
                         .version("3.0.0")
-                        .description("API REST para gerenciamento de lancamentos. Interface web disponivel em /"));
+                        .description("API REST para gerenciamento de lancamentos financeiros. Interface web disponivel em /"));
     }
 }

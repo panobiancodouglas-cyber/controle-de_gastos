@@ -26,7 +26,7 @@ public class LancamentoRestController {
     private LancamentoRepository lancamentoRepository;
 
     @GetMapping
-    @Operation(summary = "Listar todos os lancamentos")
+    @Operation(summary = "Listar todos os lancamentos", description = "Retorna a lista completa ordenada por data decrescente")
     public ResponseEntity<List<Lancamento>> listar() {
         List<Lancamento> lancamentos = lancamentoRepository.findAll();
         lancamentos.sort(Comparator.comparing(Lancamento::getData).reversed());
@@ -37,7 +37,7 @@ public class LancamentoRestController {
     @Operation(summary = "Buscar lancamento por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lancamento encontrado"),
-            @ApiResponse(responseCode = "404", description = "Nao encontrado")
+            @ApiResponse(responseCode = "404", description = "Lancamento nao encontrado")
     })
     public ResponseEntity<Lancamento> buscarPorId(
             @Parameter(description = "ID do lancamento") @PathVariable Long id) {
@@ -48,7 +48,7 @@ public class LancamentoRestController {
 
     @PostMapping
     @Operation(summary = "Criar novo lancamento")
-    @ApiResponse(responseCode = "201", description = "Criado com sucesso")
+    @ApiResponse(responseCode = "201", description = "Lancamento criado com sucesso")
     public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento) {
         Lancamento salvo = lancamentoRepository.save(lancamento);
         return ResponseEntity.created(URI.create("/api/v1/lancamentos/" + salvo.getId())).body(salvo);
@@ -57,7 +57,8 @@ public class LancamentoRestController {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar lancamento existente")
     public ResponseEntity<Lancamento> atualizar(
-            @PathVariable Long id, @Valid @RequestBody Lancamento lancamentoAtualizado) {
+            @PathVariable Long id,
+            @Valid @RequestBody Lancamento lancamentoAtualizado) {
         Optional<Lancamento> lancamentoOpt = lancamentoRepository.findById(id);
         if (lancamentoOpt.isPresent()) {
             Lancamento existente = lancamentoOpt.get();
@@ -72,7 +73,7 @@ public class LancamentoRestController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Excluir lancamento")
-    @ApiResponse(responseCode = "204", description = "Excluido com sucesso")
+    @ApiResponse(responseCode = "204", description = "Lancamento excluido com sucesso")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         if (lancamentoRepository.existsById(id)) {
             lancamentoRepository.deleteById(id);
